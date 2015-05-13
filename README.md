@@ -32,6 +32,25 @@ Gabriel Aguilar - skype: gab.webdesign
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span></code></pre>
             </div>
+            
+            
+<h2>Banner Initialize</h2>
+
+<div class="content">
+				<pre data-src="code/script.js" class=" language-javascript"><code class=" language-javascript"><span class="token keyword">var</span> banner <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Banner</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  elementsToRegister<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  customFunctions<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  animations<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    firstFrame <span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>                
+            </div>
 
 <table style="width:100%">
                     <thead>
