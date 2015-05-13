@@ -7,6 +7,8 @@ Gabriel Aguilar - skype: gab.webdesign
 
 <h2>Banner Full HTML Layout</h2>
 
+<p>This code should be in the HTML file, cutback.js is reference to the cutback library and banner.js is reference to the custom JS file</p>
+
 <div class="content">
                 <pre class=" language-markup" data-src="code/index.html"><code class=" language-markup"><span class="token doctype">&lt;!DOCTYPE html&gt;</span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
@@ -36,6 +38,8 @@ Gabriel Aguilar - skype: gab.webdesign
             
 <h2>Banner Initialize</h2>
 
+<p>This code should be in the custom JS file, we named as banner.js in the HTML</p>
+
 <div class="content">
 				<pre data-src="code/script.js" class=" language-javascript"><code class=" language-javascript"><span class="token keyword">var</span> banner <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Banner</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   elementsToRegister<span class="token punctuation">:</span> <span class="token punctuation">[</span>
@@ -53,6 +57,8 @@ Gabriel Aguilar - skype: gab.webdesign
             </div>
 
 <h2>Banner Parameters</h2>
+
+<p>This is a list of the parameters that you can customize on each banner</p>
 
 <table style="width:100%">
                     <thead>
