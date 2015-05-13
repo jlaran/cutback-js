@@ -52,6 +52,8 @@ Gabriel Aguilar - skype: gab.webdesign
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>                
             </div>
 
+<h2>Banner Parameters</h2>
+
 <table style="width:100%">
                     <thead>
                         <tr>
