@@ -5,7 +5,7 @@ Contact info
 Juan Carlos Lara - skype: juanlaran
 Gabriel Aguilar - skype: gab.webdesign
 
-<h2>Banner Full HTML Layout</h2>
+<h2><u>Banner Full HTML Layout</u></h2>
 
 <p>This code should be in the HTML file, cutback.js is reference to the cutback library and banner.js is reference to the custom JS file</p>
 
@@ -36,7 +36,7 @@ Gabriel Aguilar - skype: gab.webdesign
             </div>
             
             
-<h2>Banner Initialize</h2>
+<h2><u>Banner Initialize</u></h2>
 
 <p>This code should be in the custom JS file, we named as banner.js in the HTML</p>
 
@@ -56,7 +56,7 @@ Gabriel Aguilar - skype: gab.webdesign
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>                
             </div>
 
-<h2>Banner Parameters</h2>
+<h2><u>Banner Parameters</u></h2>
 
 <p>This is a list of the parameters that you can customize on each banner</p>
 
