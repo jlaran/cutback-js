@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 ///
-///  Cutback v2.2
+///  Cutback v2.3
 ///  A JS Library to easy build Doubleclick Ad Banners
 ///  Moxie Team
 ///  
@@ -53,7 +53,7 @@
                 elementToAdd.addEventListener(defaultConfig.elementsToRegister[i].eventType, functionEval, false);
             }
 
-            if (defaultConfig.expand == true && defaultConfig.type != "in-app"){
+            if (defaultConfig.expand == true){
                 
                 //Expand Hotspot
                 if(defaultConfig.hotspotExpand.length != 0){
@@ -63,12 +63,14 @@
                     alert("Please add the hotspotExpand");
                 }
 
-                //Close Hotspot
-                if(defaultConfig.hotspotClose.length != 0){
-                    var eventType = defaultConfig.hotspotExpand[1] || "click";
-                    document.querySelector(defaultConfig.hotspotClose[0]).addEventListener(eventType, motionLibrary.collapseEvent, false);
-                }else{
-                    alert("Please add the hotspotClose");
+                if (defaultConfig.type != "in-app"){
+                    //Close Hotspot
+                    if(defaultConfig.hotspotClose.length != 0){
+                        var eventType = defaultConfig.hotspotExpand[1] || "click";
+                        document.querySelector(defaultConfig.hotspotClose[0]).addEventListener(eventType, motionLibrary.collapseEvent, false);
+                    }else{
+                        alert("Please add the hotspotClose");
+                    }
                 }
             }
         }
