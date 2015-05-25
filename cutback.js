@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 ///
-///  Cutback v2.0
+///  Cutback v2.2
 ///  A JS Library to easy build Doubleclick Ad Banners
 ///  Moxie Team
 ///  
@@ -147,10 +147,12 @@
             }
 
             if(defaultConfig.expand == true){
-                if (defaultConfig.finalExpandSize[0] == 0 && defaultConfig.finalExpandSize[1] == 0 && defaultConfig.finalExpandSize[2] == 0 || defaultConfig.finalExpandSize[3] == 0){
-                    alert("Please add final expand size banner");
-                } else {
-                    Enabler.setExpandingPixelOffsets(defaultConfig.finalExpandSize[0], defaultConfig.finalExpandSize[1], defaultConfig.finalExpandSize[2], defaultConfig.finalExpandSize[3], false, false);
+                if (defaultConfig.type != "in-app"){
+                    if (defaultConfig.finalExpandSize[0] == 0 && defaultConfig.finalExpandSize[1] == 0 && defaultConfig.finalExpandSize[2] == 0 || defaultConfig.finalExpandSize[3] == 0){
+                        alert("Please add final expand size banner");
+                    } else {
+                        Enabler.setExpandingPixelOffsets(defaultConfig.finalExpandSize[0], defaultConfig.finalExpandSize[1], defaultConfig.finalExpandSize[2], defaultConfig.finalExpandSize[3], false, false);
+                    }
                 }
 
                 Enabler.setStartExpanded(defaultConfig.startExpanded);

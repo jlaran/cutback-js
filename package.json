@@ -1,7 +1,7 @@
 {
   "name": "cutback-js",
-  "filename": "cutback.min.css",
-  "version": "2.0",
+  "filename": "cutback.min.js",
+  "version": "2.2",
   "description": "Library used to create html5 banners ads trafficked through DoubleClick Studio and set up with Greensock animations",
   "homepage": "https://github.com/jlaran/cutback-js",
   "keywords": [
