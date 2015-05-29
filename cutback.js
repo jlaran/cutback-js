@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 ///
-///  Cutback v2.4
+///  Cutback v2.5
 ///  A JS Library to easy build Doubleclick Ad Banners
 ///  Moxie Team
 ///  
@@ -23,9 +23,11 @@
 
         if (defaultConfig.doubleClickTraking == true){
 			doubleClickEvents.initializer();
+            motionLibrary.registerTimelines();
 		} else {
 			eventsLibrary.addListener();
 			motionLibrary.checkTabStatus();
+            motionLibrary.registerTimelines();
 			motionLibrary.executeAnimations();
 		}
 	}
@@ -37,6 +39,8 @@
 		defaultConfig.finalExpandSize = bannerConfig.finalExpandSize || [0,0,0,0];
         defaultConfig.startExpanded = bannerConfig.startExpanded || false;
 		defaultConfig.elementsToRegister = bannerConfig.elementsToRegister || [];
+        defaultConfig.timelines = bannerConfig.timelines || [];
+        defaultConfig.timelinesAnimation = bannerConfig.timelinesAnimation || {};
         defaultConfig.animations = bannerConfig.animations || [];
         defaultConfig.customFunctions = bannerConfig.customFunctions || {};
         defaultConfig.hotspotClose = bannerConfig.hotspotClose || [];
@@ -114,17 +118,21 @@
             };
         },
         resetWhenCloseOrExit : function(){
-            TweenMax.set("div", {clearProps:"all"});
-            TweenMax.set("span", {clearProps:"all"});
-            TweenMax.set("p", {clearProps:"all"});
-            TweenMax.set("h1", {clearProps:"all"});
-            TweenMax.set("h2", {clearProps:"all"});
-            TweenMax.set("h3", {clearProps:"all"});
-            TweenMax.set("h4", {clearProps:"all"});
-            TweenMax.set("a", {clearProps:"all"});
-            TweenMax.set("input", {clearProps:"all"});
-            TweenMax.set("canvas", {clearProps:"all"});
-            TweenMax.killAll();
+            TweenMax.set(".banner > div", {clearProps:"all"});
+            TweenMax.set(".banner > span", {clearProps:"all"});
+            TweenMax.set(".banner > p", {clearProps:"all"});
+            TweenMax.set(".banner > h1", {clearProps:"all"});
+            TweenMax.set(".banner > h2", {clearProps:"all"});
+            TweenMax.set(".banner > h3", {clearProps:"all"});
+            TweenMax.set(".banner > h4", {clearProps:"all"});
+            TweenMax.set(".banner > a", {clearProps:"all"});
+            TweenMax.set(".banner > input", {clearProps:"all"});
+            TweenMax.set(".banner > canvas", {clearProps:"all"});
+
+            for (var i = 0; i < timelinesArray.length; i++) {
+                timelinesArray[i].seek(0).pause();
+            };
+            
             motionLibrary.executeAnimations();
         },
         executeAnimations : function(){
@@ -136,6 +144,23 @@
         },
         expandEvent : function(){
             Enabler.requestExpand();
+        },
+        registerTimelines : function(){
+
+            timelinesArray = [];
+            timelinesNameArray = [];
+
+            for (var i = 0; i < defaultConfig.timelines.length; i++) {
+                eval(defaultConfig.timelines[i]+"= new TimelineMax()");
+                timelinesNameArray.push(defaultConfig.timelines[i]);
+                timelinesArray.push(eval(defaultConfig.timelines[i]));
+            };
+
+            defaultConfig.timelinesAnimation.register();
+
+            for (var i = 0; i < defaultConfig.timelines.length; i++) {
+                timelinesArray[i].pause();
+            };
         }
     }
 
