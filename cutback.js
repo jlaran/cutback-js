@@ -42,18 +42,16 @@
         defaultConfig.timelines = bannerConfig.timelines || [];
         defaultConfig.timelinesAnimation = bannerConfig.timelinesAnimation || {};
         defaultConfig.animations = bannerConfig.animations || [];
-        defaultConfig.customFunctions = bannerConfig.customFunctions || {};
         defaultConfig.hotspotClose = bannerConfig.hotspotClose || [];
         defaultConfig.hotspotExpand = bannerConfig.hotspotExpand || [];
 	}
 
     var eventsLibrary = {
         addListener : function(){
-        	var customFunctionsRoot = defaultConfig.customFunctions;
             for (var i = 0; i < defaultConfig.elementsToRegister.length; i++) {
                 var elementToAdd = document.querySelector(defaultConfig.elementsToRegister[i].element),
                     functionToDO = defaultConfig.elementsToRegister[i].functionToCall,
-                    functionEval = eval('customFunctionsRoot.'+functionToDO);
+                    functionEval = eval('customFunctions.'+functionToDO);
                 elementToAdd.addEventListener(defaultConfig.elementsToRegister[i].eventType, functionEval, false);
             }
 
