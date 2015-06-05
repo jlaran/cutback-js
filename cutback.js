@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 ///
-///  Cutback v2.7
+///  Cutback v2.8
 ///  A JS Library to easy build Doubleclick Ad Banners
 ///  Moxie Team
 ///  
@@ -49,10 +49,22 @@
     var eventsLibrary = {
         addListener : function(){
             for (var i = 0; i < defaultConfig.elementsToRegister.length; i++) {
-                var elementToAdd = document.querySelector(defaultConfig.elementsToRegister[i].element),
+
+                var elementToAdd,
                     functionToDO = defaultConfig.elementsToRegister[i].functionToCall,
                     functionEval = eval('customFunctions.'+functionToDO);
-                elementToAdd.addEventListener(defaultConfig.elementsToRegister[i].eventType, functionEval, false);
+
+                if (defaultConfig.elementsToRegister[i].element.charAt(0) == "."){
+                    elementToAdd = document.querySelectorAll(defaultConfig.elementsToRegister[i].element);
+
+                    for (var k = 0; k < elementToAdd.length; k++) {
+                        elementToAdd[k].addEventListener(defaultConfig.elementsToRegister[i].eventType, functionEval, false);
+                    };
+
+                } else {
+                    elementToAdd = document.querySelector(defaultConfig.elementsToRegister[i].element);                    
+                    elementToAdd.addEventListener(defaultConfig.elementsToRegister[i].eventType, functionEval, false);
+                }   
             }
 
             if (defaultConfig.expand == true){
