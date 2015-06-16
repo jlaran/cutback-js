@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 ///
-///  Cutback v3.2
+///  Cutback v3.3
 ///  A JS Library to easy build Doubleclick Ad Banners
 ///  Moxie Team
 ///  
@@ -37,11 +37,11 @@
 
 	        //Timelines
 	        this.timelinesName = bannerConfig.timelinesName || [];
-	        this.timelinesToregister = bannerConfig.timelinesToregister || {};
+	        this.timelinesToRegister = bannerConfig.timelinesToRegister || {};
 	        this.timelinesArray = [];
 	        
+            //Frames
 	        this.animationFrames = bannerConfig.animationFrames || [];
-            this.expandAnimations = bannerConfig.expandAnimations || {};
 		},
 		initializeBanner : function(bannerConfig){
 			if(!this.initialized){
@@ -90,35 +90,35 @@
                 Enabler.setStartExpanded(this.startExpanded);
 
                 Enabler.addEventListener( studio.events.StudioEvent.EXPAND_START, function(){
-                    if(this.expandAnimations.expandStartAnimation){
-                        eval(this.expandAnimations.expandStartAnimation());
+                    if(this.timelinesToRegister.expandStartAnimation){
+                        eval(this.timelinesToRegister.expandStartAnimation());
                     }
                     Enabler.finishExpand()
                 });
 
                 Enabler.addEventListener( studio.events.StudioEvent.EXPAND_FINISH, function(){
-                    if(this.expandAnimations.expandFinishAnimation){
-                        eval(this.expandAnimations.expandFinishAnimation()); 
+                    if(this.timelinesToRegister.expandFinishAnimation){
+                        eval(this.timelinesToRegister.expandFinishAnimation()); 
                     }
                 });
 
                 Enabler.addEventListener( studio.events.StudioEvent.COLLAPSE_START, function(){
-                    if(this.expandAnimations.collapseStartAnimation){
-                        eval(this.expandAnimations.collapseStartAnimation());
+                    if(this.timelinesToRegister.collapseStartAnimation){
+                        eval(this.timelinesToRegister.collapseStartAnimation());
                     }
                     Enabler.finishCollapse()
                 });
 
                 Enabler.addEventListener( studio.events.StudioEvent.COLLAPSE_FINISH, function(){
-                    if(this.expandAnimations.collapseFinishAnimation){
-                        eval(this.expandAnimations.collapseFinishAnimation()); 
+                    if(this.timelinesToRegister.collapseFinishAnimation){
+                        eval(this.timelinesToRegister.collapseFinishAnimation()); 
                     }
                 });
 
                 //Initial orientation
                 document.getElementsByTagName("body")[0].className = Enabler.getOrientation().getMode();
 
-                Enabler.addEventListener( studio.events.StudioEvent.ORIENTATION, function(){
+                Enabler.addEventListener(studio.events.StudioEvent.ORIENTATION, function(){
                     document.getElementsByTagName("body")[0].className = Enabler.getOrientation().getMode();
                 });
             }
@@ -182,7 +182,7 @@
                 this.timelinesArray.push(eval(this.timelinesName[i]));
             };
 
-            this.timelinesToregister();
+            this.timelinesToRegister.register();
 
             for (var i = 0; i < this.timelinesName.length; i++) {
                 this.timelinesArray[i].pause();
