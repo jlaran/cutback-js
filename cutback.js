@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 ///
-///  Cutback v3.1
+///  Cutback v3.2
 ///  A JS Library to easy build Doubleclick Ad Banners
 ///  Moxie Team
 ///  
@@ -41,6 +41,7 @@
 	        this.timelinesArray = [];
 	        
 	        this.animationFrames = bannerConfig.animationFrames || [];
+            this.expandAnimations = bannerConfig.expandAnimations || {};
 		},
 		initializeBanner : function(bannerConfig){
 			if(!this.initialized){
@@ -89,28 +90,28 @@
                 Enabler.setStartExpanded(this.startExpanded);
 
                 Enabler.addEventListener( studio.events.StudioEvent.EXPAND_START, function(){
-                    if(this.timelinesAnimation.expandStartAnimation){
-                        eval(this.timelinesAnimation.expandStartAnimation());
+                    if(this.expandAnimations.expandStartAnimation){
+                        eval(this.expandAnimations.expandStartAnimation());
                     }
                     Enabler.finishExpand()
                 });
 
                 Enabler.addEventListener( studio.events.StudioEvent.EXPAND_FINISH, function(){
-                    if(this.timelinesAnimation.expandFinishAnimation){
-                        eval(this.timelinesAnimation.expandFinishAnimation()); 
+                    if(this.expandAnimations.expandFinishAnimation){
+                        eval(this.expandAnimations.expandFinishAnimation()); 
                     }
                 });
 
                 Enabler.addEventListener( studio.events.StudioEvent.COLLAPSE_START, function(){
-                    if(this.timelinesAnimation.collapseStartAnimation){
-                        eval(this.timelinesAnimation.collapseStartAnimation());
+                    if(this.expandAnimations.collapseStartAnimation){
+                        eval(this.expandAnimations.collapseStartAnimation());
                     }
                     Enabler.finishCollapse()
                 });
 
                 Enabler.addEventListener( studio.events.StudioEvent.COLLAPSE_FINISH, function(){
-                    if(this.timelinesAnimation.collapseFinishAnimation){
-                        eval(this.timelinesAnimation.collapseFinishAnimation()); 
+                    if(this.expandAnimations.collapseFinishAnimation){
+                        eval(this.expandAnimations.collapseFinishAnimation()); 
                     }
                 });
 
