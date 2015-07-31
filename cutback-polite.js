@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 ///
-///  Cutback v3.3
+///  Cutback v3.4
 ///  A JS Library to easy build Doubleclick Ad Banners
 ///  Moxie Team
 ///  
@@ -90,28 +90,28 @@
                 Enabler.setStartExpanded(this.startExpanded);
 
                 Enabler.addEventListener( studio.events.StudioEvent.EXPAND_START, function(){
-                    if(banner.timelinesToRegister.expandStartAnimation){
-                        eval(banner.timelinesToRegister.expandStartAnimation());
+                    if(this.timelinesToRegister.expandStartAnimation){
+                        eval(this.timelinesToRegister.expandStartAnimation());
                     }
                     Enabler.finishExpand()
                 });
 
                 Enabler.addEventListener( studio.events.StudioEvent.EXPAND_FINISH, function(){
-                    if(banner.timelinesToRegister.expandFinishAnimation){
-                        eval(banner.timelinesToRegister.expandFinishAnimation()); 
+                    if(this.timelinesToRegister.expandFinishAnimation){
+                        eval(this.timelinesToRegister.expandFinishAnimation()); 
                     }
                 });
 
                 Enabler.addEventListener( studio.events.StudioEvent.COLLAPSE_START, function(){
-                    if(banner.timelinesToRegister.collapseStartAnimation){
-                        eval(banner.timelinesToRegister.collapseStartAnimation());
+                    if(this.timelinesToRegister.collapseStartAnimation){
+                        eval(this.timelinesToRegister.collapseStartAnimation());
                     }
                     Enabler.finishCollapse()
                 });
 
                 Enabler.addEventListener( studio.events.StudioEvent.COLLAPSE_FINISH, function(){
-                    if(banner.timelinesToRegister.collapseFinishAnimation){
-                        eval(banner.timelinesToRegister.collapseFinishAnimation()); 
+                    if(this.timelinesToRegister.collapseFinishAnimation){
+                        eval(this.timelinesToRegister.collapseFinishAnimation()); 
                     }
                 });
 
