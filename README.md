@@ -1,3 +1,5 @@
+[![](https://data.jsdelivr.com/v1/package/gh/jlaran/cutback-js/badge)](https://www.jsdelivr.com/package/gh/jlaran/cutback-js)
+
 # cutback-js
 Cutback JS Library - For HTML5 Doubleclick Banners
 
