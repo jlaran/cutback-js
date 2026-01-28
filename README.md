@@ -2,7 +2,7 @@
 
 [![jsDelivr](https://data.jsdelivr.com/v1/package/gh/jlaran/cutback-js/badge)](https://www.jsdelivr.com/package/gh/jlaran/cutback-js)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-3.5.3-green.svg)](https://github.com/jlaran/cutback-js)
+[![Version](https://img.shields.io/badge/version-4.0.0-green.svg)](https://github.com/jlaran/cutback-js)
 
 **A professional JavaScript library for creating high-performance HTML5 animated banner advertisements, optimized for Google DoubleClick Studio integration.**
 
@@ -14,11 +14,25 @@ Cutback JS streamlines the development of interactive HTML5 banner ads by provid
 
 ### Key Highlights
 
+- **ES6 Module Architecture**: Modern class-based design with ES modules and UMD bundles
 - **Production-Ready**: Battle-tested in real advertising campaigns
 - **DoubleClick Integration**: Native support for Google DoubleClick Studio's Enabler API
 - **Animation Engine**: Built on GreenSock (GSAP) for smooth, high-performance animations
 - **Developer Experience**: Includes debugging tools and timeline visualization
 - **Flexible Architecture**: Supports standard, expandable, and polite-load banner types
+- **Security-First**: Removed all eval() calls, using safe function references
+
+---
+
+## What's New in v4.0
+
+- **ES6 Classes**: Modern class syntax with inheritance (`Banner extends BaseBanner`)
+- **ES Modules**: Native ESM support with UMD fallback for browsers
+- **Rollup Build**: Optimized bundles (ESM, UMD, minified)
+- **No More eval()**: Secure timeline management using Map instead of eval()
+- **Function Handlers**: Pass functions directly instead of string function names
+- **Private Class Fields**: Stats widget uses private fields for encapsulation
+- **Template Literals**: Clean HTML generation in utilities
 
 ---
 
@@ -28,100 +42,278 @@ This project showcases proficiency in:
 
 | Category | Technologies & Skills |
 |----------|----------------------|
-| **Languages** | JavaScript (ES5), HTML5, CSS3 |
+| **Languages** | JavaScript (ES6+), HTML5, CSS3 |
 | **Animation** | GreenSock Animation Platform (GSAP), TimelineMax, TweenMax |
 | **Ad Tech** | Google DoubleClick Studio, Enabler.js API, Rich Media Ads |
-| **Architecture** | Modular library design, Event-driven programming, IIFE patterns |
+| **Architecture** | ES6 classes, Inheritance, ES modules, Event-driven programming |
+| **Build Tools** | Rollup, npm scripts, Terser minification |
 | **API Design** | Declarative configuration, Callback management, State handling |
-| **Custom Tooling** | Visual debugger (Cutback Stats), Image slicer utility (Cutback Mask) |
-| **Distribution** | CDN deployment (jsDelivr), npm packaging, minification |
-| **UI/UX** | Draggable widgets, Real-time visualization, Developer experience |
+| **Custom Tooling** | Visual debugger (Stats), Image slicer utility (FadedMask) |
+| **Distribution** | CDN deployment (jsDelivr), npm packaging, ESM/UMD dual builds |
 
 ---
 
-## Features
+## Installation
 
-### Banner Configuration System
-Single configuration object pattern for clean, declarative banner setup:
+### NPM (Recommended)
+
+```bash
+npm install cutback-js
+```
+
+### ES Modules
 
 ```javascript
-var banner = new Banner({
-    bannerType: "in-page",
-    expand: true,
-    finalExpandSize: [0, 0, 320, 460],
-    timelinesName: ["mainTimeline", "loopTimeline"],
-    animationFrames: [
-        function intro() { /* Animation logic */ }
+import { Banner, GenericBanner, Stats, FadedMask } from 'cutback-js';
+```
+
+### CDN (UMD Bundle)
+
+```html
+<!-- Required: GreenSock Animation Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<!-- Required for DoubleClick: Enabler API -->
+<script src="https://s0.2mdn.net/ads/studio/Enabler.js"></script>
+
+<!-- Cutback JS v4 -->
+<script src="https://cdn.jsdelivr.net/gh/jlaran/cutback-js@latest/dist/cutback.min.js"></script>
+```
+
+With UMD, all exports are available under the `Cutback` namespace:
+```javascript
+const banner = new Cutback.Banner({...});
+const stats = new Cutback.Stats();
+```
+
+---
+
+## Quick Start
+
+### ES Module Usage
+
+```javascript
+import { Banner } from 'cutback-js';
+
+const banner = new Banner({
+    timelinesName: ['mainTimeline'],
+    elementsToRegister: [
+        { eventType: 'click', element: '#cta-button', handler: () => handleClick() }
     ],
-    timelinesAnimation: {
-        register: function() {
-            timelinesArray[0].to(".headline", 0.5, {opacity: 1, y: 0});
-            timelinesArray[0].to(".cta", 0.3, {scale: 1, ease: Back.easeOut});
+    animationFrames: [
+        () => mainTimeline.play()
+    ],
+    timelinesToRegister: {
+        register() {
+            mainTimeline
+                .from('.logo', { opacity: 0, scale: 0.8, duration: 0.5 })
+                .from('.headline', { opacity: 0, y: 20, duration: 0.4 })
+                .from('.cta', { opacity: 0, scale: 0.9, duration: 0.3 });
+        }
+    }
+});
+
+function handleClick() {
+    Enabler.exit('CTA Click');
+}
+```
+
+### UMD/Script Tag Usage
+
+```html
+<script>
+const banner = new Cutback.Banner({
+    timelinesName: ['mainTimeline'],
+    elementsToRegister: [
+        { eventType: 'click', element: '#cta-button', handler: () => handleClick() }
+    ],
+    animationFrames: [
+        () => mainTimeline.play()
+    ],
+    timelinesToRegister: {
+        register() {
+            mainTimeline
+                .from('.logo', { opacity: 0, scale: 0.8, duration: 0.5 })
+                .from('.headline', { opacity: 0, y: 20, duration: 0.4 })
+                .from('.cta', { opacity: 0, scale: 0.9, duration: 0.3 });
+        }
+    }
+});
+
+function handleClick() {
+    Enabler.exit('CTA Click');
+}
+</script>
+```
+
+### Generic Banner (No DoubleClick)
+
+```javascript
+import { GenericBanner } from 'cutback-js';
+
+const banner = new GenericBanner({
+    timelinesName: ['mainTimeline'],
+    animationFrames: [() => mainTimeline.play()],
+    timelinesToRegister: {
+        register() {
+            mainTimeline.to('.box', { x: 200, duration: 1 });
         }
     }
 });
 ```
 
-### Timeline Management
-- Multiple named timelines with independent control
-- Pause, resume, restart, and seek functionality
-- Label-based navigation for complex animations
-- Synchronized animation sequences
+---
 
-### Expandable Banner Support
-- Configurable expand/collapse dimensions
-- Event-driven lifecycle management
-- Separate animation callbacks for each state
-- Mobile orientation support
+## API Changes from v3 to v4
+
+### Event Handlers
+
+**Before (v3):**
+```javascript
+elementsToRegister: [
+    { eventType: 'click', element: '#btn', functionToCall: 'handleClick' }
+]
+```
+
+**After (v4):**
+```javascript
+elementsToRegister: [
+    { eventType: 'click', element: '#btn', handler: () => handleClick() }
+]
+```
+
+### Timeline Access
+
+**Before (v3):**
+```javascript
+timelinesArray[0].to('.element', 0.5, { opacity: 1 });
+```
+
+**After (v4):**
+```javascript
+// Via Map (recommended):
+banner.timelines.get('mainTimeline').to('.element', { opacity: 1, duration: 0.5 });
+
+// Via array (backward compatible):
+banner.timelinesArray[0].to('.element', { opacity: 1, duration: 0.5 });
+
+// Via window global (legacy):
+mainTimeline.to('.element', { opacity: 1, duration: 0.5 });
+```
+
+### Import/Namespace
+
+**Before (v3):**
+```html
+<script src="cutback.min.js"></script>
+<script>
+var banner = new Banner({...});
+</script>
+```
+
+**After (v4):**
+```html
+<script src="dist/cutback.min.js"></script>
+<script>
+const banner = new Cutback.Banner({...});
+</script>
+```
 
 ---
 
-## Cutback Stats - Animation Debugger
+## Banner Classes
 
-A powerful visual debugging tool for timeline animations during development.
+### Banner (DoubleClick)
 
-![Cutback Stats Widget](https://img.shields.io/badge/Tool-Debug%20Widget-orange)
+Full DoubleClick Studio integration with Enabler API.
 
-### Features
+```javascript
+import { Banner } from 'cutback-js';
+
+const banner = new Banner({
+    bannerType: 'in-page',
+    expand: true,
+    finalExpandSize: [0, 0, 320, 460],
+    doubleClickTracking: true,
+    timelinesName: ['mainTimeline', 'loopTimeline'],
+    // ... configuration
+});
+```
+
+### PoliteBanner
+
+Waits for polite-load event before executing animations.
+
+```javascript
+import { PoliteBanner } from 'cutback-js';
+
+const banner = new PoliteBanner({
+    // Same configuration as Banner
+});
+```
+
+### GenericBanner
+
+Standalone banner without DoubleClick dependency.
+
+```javascript
+import { GenericBanner } from 'cutback-js';
+
+const banner = new GenericBanner({
+    timelinesName: ['mainTimeline'],
+    // ... configuration (no doubleClickTracking)
+});
+```
+
+---
+
+## Utilities
+
+### Stats - Animation Debugger
+
+A visual debugging tool for timeline animations during development.
+
+```javascript
+import { Stats } from 'cutback-js';
+
+// After creating your banner:
+const stats = new Stats(banner);
+// Or it will auto-connect to window.banner
+```
+
+#### Features
 
 | Feature | Description |
 |---------|-------------|
-| **Playback Controls** | Play, Pause, and Restart buttons with visual state feedback |
-| **Timeline Scrubbing** | Drag slider to seek to any point in the animation |
-| **Label Navigation** | Jump to named labels via dropdown selector |
-| **Multi-Timeline Support** | Switch between multiple timelines in complex animations |
-| **Real-Time Display** | Live current time and total duration counters |
-| **Draggable Widget** | Reposition the debug panel anywhere on screen |
-| **Auto-Hide Opacity** | Semi-transparent when idle, full opacity on hover |
+| **Playback Controls** | Play, Pause, and Restart buttons |
+| **Timeline Scrubbing** | Drag slider to seek to any point |
+| **Label Navigation** | Jump to named labels via dropdown |
+| **Multi-Timeline Support** | Switch between multiple timelines |
+| **Real-Time Display** | Live current time and total duration |
+| **Draggable Widget** | Reposition the debug panel anywhere |
 
-### Usage
+### FadedMask - Image Reveal Effects
 
-```html
-<!-- Add during development, remove for production -->
-<script src="https://cdn.jsdelivr.net/gh/jlaran/cutback-js@latest/cutback-stats.min.js"></script>
-```
-
-The widget automatically attaches to the page and connects to your banner's timelines. Use timeline labels for easy navigation:
+Creates animated image slice effects with directional reveals.
 
 ```javascript
-timelinesArray[0]
-    .addLabel("intro")
-    .to(".logo", 0.5, {opacity: 1})
-    .addLabel("headline")
-    .to(".headline", 0.4, {y: 0})
-    .addLabel("cta")
-    .to(".cta", 0.3, {scale: 1});
+import { FadedMask } from 'cutback-js';
+
+FadedMask.setMask({
+    container: '#image-container',
+    imageUrl: 'images/hero.jpg',
+    imageWidth: 300,
+    imageHeight: 250,
+    maskWidth: 10,
+    maskClass: 'slice',
+    direction: 'left-right'
+});
+
+// Animate with GSAP
+mainTimeline.from('.slice', { opacity: 0, x: -20, stagger: 0.05, duration: 0.3 });
 ```
 
----
-
-## Cutback Mask - Image Reveal Effects
-
-A utility for creating dynamic image slice animations with directional reveal effects.
-
-![Cutback Mask](https://img.shields.io/badge/Tool-Animation%20Utility-blue)
-
-### Directional Modes
+#### Directions
 
 | Direction | Effect |
 |-----------|--------|
@@ -129,109 +321,6 @@ A utility for creating dynamic image slice animations with directional reveal ef
 | `right-left` | Slices reveal from right to left |
 | `top-bottom` | Slices reveal from top to bottom |
 | `bottom-top` | Slices reveal from bottom to top |
-
-### Usage
-
-```javascript
-// Split image into animated slices
-fadedMask.setMask({
-    container: "#image-container",
-    imageUrl: "images/hero.jpg",
-    imageWidth: 300,
-    imageHeight: 250,
-    maskWidth: 10,           // Slice width in pixels
-    maskClass: "slice",      // CSS class for targeting
-    direction: "left-right"  // Animation direction
-});
-
-// Animate slices with staggered effect
-timelinesArray[0].staggerFrom(".slice", 0.3, {
-    opacity: 0,
-    x: -20
-}, 0.05);
-```
-
-### How It Works
-
-The utility dynamically generates individual `<div>` elements, each displaying a portion of the source image using CSS `background-position`. This creates animatable slices that can be staggered with GSAP for smooth wipe/reveal transitions.
-
-```
-Original Image          →    Sliced Output
-┌─────────────────┐         ┌─┬─┬─┬─┬─┬─┬─┐
-│                 │         │ │ │ │ │ │ │ │
-│   hero.jpg      │    →    │ │ │ │ │ │ │ │  ← Each slice animates independently
-│                 │         │ │ │ │ │ │ │ │
-└─────────────────┘         └─┴─┴─┴─┴─┴─┴─┘
-```
-
----
-
-## Architecture
-
-```
-cutback-js/
-├── cutback.js           # Core library with DoubleClick integration
-├── cutback-polite.js    # Polite-load variant for delayed initialization
-├── cutback_generic.js   # Lightweight version without DoubleClick dependency
-├── cutbackMask.js       # Image slicing for reveal animations
-├── cutback-stats.js     # Visual debugging & timeline inspector
-└── *.min.js             # Production-ready minified versions
-```
-
-### Library Components
-
-| Component | Purpose | Use Case |
-|-----------|---------|----------|
-| `cutback.min.js` | Core banner library | Standard DoubleClick banners |
-| `cutback-polite.min.js` | Polite-load variant | Delayed initialization campaigns |
-| `cutback_generic.min.js` | Standalone version | Non-DoubleClick deployments |
-| `cutbackMask.min.js` | Image slicer | Wipe/reveal animation effects |
-| `cutback-stats.min.js` | Debug inspector | Development & QA testing |
-
----
-
-## Quick Start
-
-### CDN Installation
-
-```html
-<!-- Required: GreenSock Animation Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.2/TweenMax.min.js"></script>
-
-<!-- Required for DoubleClick: Enabler API -->
-<script src="https://s0.2mdn.net/ads/studio/Enabler.js"></script>
-
-<!-- Cutback JS -->
-<script src="https://cdn.jsdelivr.net/gh/jlaran/cutback-js@latest/cutback.min.js"></script>
-```
-
-### Basic Implementation
-
-```javascript
-var banner = new Banner({
-    timelinesName: ["mainTimeline"],
-    elementsToRegister: [
-        {eventType: "click", element: "#cta-button", functionToCall: "handleClick"}
-    ],
-    animationFrames: [
-        function firstFrame() {
-            timelinesArray[0].play();
-        }
-    ],
-    timelinesAnimation: {
-        register: function() {
-            timelinesArray[0]
-                .from(".logo", 0.5, {opacity: 0, scale: 0.8})
-                .from(".headline", 0.4, {opacity: 0, y: 20})
-                .from(".cta", 0.3, {opacity: 0, scale: 0.9});
-        }
-    }
-});
-
-function handleClick() {
-    Enabler.exit("CTA Click");
-}
-```
 
 ---
 
@@ -241,60 +330,73 @@ function handleClick() {
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `bannerType` | string | `"in-page"` | Banner type: `"in-page"` or `"in-app"` |
+| `bannerType` | string | `'in-page'` | Banner type: `'in-page'` or `'in-app'` |
 | `expand` | boolean | `false` | Enable expandable banner functionality |
-| `finalExpandSize` | array | `[0,0,0,0]` | Expand dimensions: `[x, y, width, height]` |
+| `finalExpandSize` | array | `[0,0,0,0]` | Expand dimensions: `[left, top, right, bottom]` |
 | `startExpanded` | boolean | `false` | Initial expanded state |
-| `doubleClickTracking` | boolean | `true` | Enable DoubleClick tracking |
+| `doubleClickTracking` | boolean | `true` | Enable DoubleClick tracking (Banner only) |
+| `autoInit` | boolean | `true` | Auto-initialize on window load |
 
 ### Event Registration
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `elementsToRegister` | array | Element-event-callback bindings |
-| `hotspotExpand` | array | Element triggering expand: `["#selector", "event"]` |
-| `hotspotClose` | array | Element triggering collapse: `["#selector", "event"]` |
+| `elementsToRegister` | array | Element-event-handler bindings |
+| `hotspotExpand` | array | Element triggering expand: `['#selector', 'event']` |
+| `hotspotClose` | array | Element triggering collapse: `['#selector', 'event']` |
 
 ### Animation System
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `timelinesName` | array | Named timeline identifiers |
-| `timelinesAnimation` | object | Timeline registration and lifecycle callbacks |
+| `timelinesToRegister` | object | Timeline registration and lifecycle callbacks |
 | `animationFrames` | array | Animation frame functions (first executes automatically) |
+
+### Lifecycle Callbacks (timelinesToRegister)
+
+```javascript
+timelinesToRegister: {
+    register() { /* Called when timelines are created */ },
+    expandStartAnimation() { /* Called on expand start */ },
+    expandFinishAnimation() { /* Called on expand complete */ },
+    collapseStartAnimation() { /* Called on collapse start */ },
+    collapseFinishAnimation() { /* Called on collapse complete */ }
+}
+```
 
 ---
 
-## Event Lifecycle
-
-The library manages the complete DoubleClick banner lifecycle:
+## Architecture
 
 ```
-Window Load → Initialize Banner → Setup DoubleClick Listeners
-                                          ↓
-                              Wait for Enabler INIT
-                                          ↓
-                              Register Event Listeners
-                                          ↓
-                              Wait for PAGE_LOADED/VISIBLE
-                                          ↓
-                              Execute Animation Frames
+cutback-js/
+├── src/
+│   ├── core/
+│   │   └── BaseBanner.js        # Base class with shared functionality
+│   ├── banners/
+│   │   ├── Banner.js            # DoubleClick banner
+│   │   ├── PoliteBanner.js      # Polite-load variant
+│   │   └── GenericBanner.js     # Non-DoubleClick variant
+│   ├── utils/
+│   │   ├── FadedMask.js         # Image slicing utility
+│   │   └── Stats.js             # Debug widget
+│   └── index.js                 # Main entry point
+├── dist/
+│   ├── cutback.esm.js           # ES Module bundle
+│   ├── cutback.umd.js           # UMD bundle
+│   ├── cutback.min.js           # Minified UMD
+│   └── cutback-stats.min.js     # Standalone stats widget
+├── rollup.config.js
+└── package.json
 ```
-
-**Supported Events:**
-- `INIT` - Enabler initialization complete
-- `PAGE_LOADED` - All page resources ready
-- `VISIBLE` - Banner enters viewport
-- `EXPAND_START` / `EXPAND_FINISH` - Expansion lifecycle
-- `COLLAPSE_START` / `COLLAPSE_FINISH` - Collapse lifecycle
-- `ORIENTATION` - Device orientation change (mobile)
 
 ---
 
 ## Browser Support
 
 - Modern browsers (Chrome, Firefox, Safari, Edge)
-- ES5 JavaScript environment
+- ES6+ JavaScript environment
 - CSS3 transforms and transitions
 
 ---
@@ -316,5 +418,5 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 - **Repository**: [github.com/jlaran/cutback-js](https://github.com/jlaran/cutback-js)
 - **CDN**: [jsDelivr](https://www.jsdelivr.com/package/gh/jlaran/cutback-js)
-- **GreenSock**: [greensock.com](https://greensock.com)
+- **GreenSock**: [gsap.com](https://gsap.com)
 - **DoubleClick Studio**: [Google Marketing Platform](https://marketingplatform.google.com)

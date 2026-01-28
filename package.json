@@ -1,21 +1,50 @@
 {
   "name": "cutback-js",
-  "filename": "cutback.min.js",
-  "version": "2.2",
-  "description": "Library used to create html5 banners ads trafficked through DoubleClick Studio and set up with Greensock animations",
+  "version": "4.0.0",
+  "type": "module",
+  "description": "Library for creating HTML5 banner ads with GSAP animations, supporting DoubleClick Studio and generic implementations",
+  "main": "dist/cutback.umd.js",
+  "module": "dist/cutback.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/cutback.esm.js",
+      "require": "./dist/cutback.umd.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
+  },
   "homepage": "https://github.com/jlaran/cutback-js",
   "keywords": [
-    "cutback"
+    "cutback",
+    "banner",
+    "gsap",
+    "greensock",
+    "doubleclick",
+    "advertising",
+    "html5"
   ],
-  "maintainers": [
+  "author": "Juan Carlos Lara",
+  "contributors": [
     {
-      "name": "Juan Carlos Lara",
-      "skype": "juanlaran"
+      "name": "Juan Carlos Lara"
     },
     {
-      "name": "Gabriel Aguilar",
-      "skype": "gab.webdesign"
+      "name": "Gabriel Aguilar"
     }
   ],
-  "repositories": []
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jlaran/cutback-js.git"
+  },
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.29.1"
+  }
 }
