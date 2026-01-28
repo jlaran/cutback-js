@@ -13,9 +13,9 @@
 
 ### CDN Statistics
 
-| Total Hits | Monthly | Weekly |
-|:----------:|:-------:|:------:|
-| [![jsDelivr hits (total)](https://data.jsdelivr.com/v1/stats/packages/gh/jlaran/cutback-js/badge)](https://www.jsdelivr.com/package/gh/jlaran/cutback-js) | [![jsDelivr hits (month)](https://data.jsdelivr.com/v1/stats/packages/gh/jlaran/cutback-js/badge?period=month)](https://www.jsdelivr.com/package/gh/jlaran/cutback-js) | [![jsDelivr hits (week)](https://data.jsdelivr.com/v1/stats/packages/gh/jlaran/cutback-js/badge?period=week)](https://www.jsdelivr.com/package/gh/jlaran/cutback-js) |
+| Yearly | Monthly | Weekly |
+|:------:|:-------:|:------:|
+| [![jsDelivr hits (year)](https://data.jsdelivr.com/v1/stats/packages/gh/jlaran/cutback-js/badge?period=year)](https://www.jsdelivr.com/package/gh/jlaran/cutback-js) | [![jsDelivr hits (month)](https://data.jsdelivr.com/v1/stats/packages/gh/jlaran/cutback-js/badge?period=month)](https://www.jsdelivr.com/package/gh/jlaran/cutback-js) | [![jsDelivr hits (week)](https://data.jsdelivr.com/v1/stats/packages/gh/jlaran/cutback-js/badge?period=week)](https://www.jsdelivr.com/package/gh/jlaran/cutback-js) |
 
 [View full statistics on jsDelivr](https://www.jsdelivr.com/package/gh/jlaran/cutback-js)
 
